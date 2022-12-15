@@ -105,8 +105,14 @@ nav,
 section {
   display: block;
 }
+
+html {
+  min-height: 100%;
+  position: relative;
+}
 body {
   line-height: 1;
+  height: 100%;
 }
 ol,
 ul {
@@ -183,15 +189,28 @@ li:hover {
 }
 #introduction figure {
   flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+#introduction figure > div {
+  /* flex: 1; */
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 13px;
+  width: 80%;
 }
 #introduction img {
-  display: block;
-  margin: auto;
-  width: 80%;
+  width: 100%;
 }
 
 #introduction article {
   flex: 1;
+  align-self: flex-start;
 }
 #introduction h2 {
   margin-bottom: 1em;
@@ -199,6 +218,13 @@ li:hover {
 
 #introduction p {
   margin-bottom: 0.5em;
+}
+
+.mes-projets-title-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 31px;
 }
 #portfolio h2 {
   text-align: center;
@@ -279,7 +305,7 @@ a {
   margin: 50px 0;
 }
 
-button {
+.filter-button {
   background-color: white;
   font-family: "Work Sans";
   font-size: 16px;
@@ -293,7 +319,7 @@ button {
   transition: all 0.2s;
 }
 
-button:hover {
+.filter-button:hover {
   background-color: #1d6154;
   color: white;
 }
@@ -377,4 +403,111 @@ body {
 
 .footer-of-login-page > nav > ul > li {
   /* margin-right: 100px; */
+}
+
+/* ============ ADMIN MODE ============ */
+
+.admin-headband {
+  width: 100%;
+  height: 60px;
+  background-color: black;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 20px;
+  position: relative;
+  z-index: 2;
+}
+
+.edition-mode {
+  color: white;
+}
+
+.edition-mode > i {
+  color: white;
+}
+
+.admin-headband > button {
+  background-color: white;
+  font-family: "Work Sans";
+  font-size: 14px;
+  font-weight: 500;
+  padding: 10px;
+  min-width: 100px;
+  border-radius: 60px;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.admin-headband > button:hover {
+  background-color: lightgray;
+}
+
+i {
+  padding-right: 8px;
+}
+
+.editButton {
+  border: none;
+  background-color: transparent;
+  margin-bottom: 20px;
+  padding: 0;
+  cursor: pointer;
+  transition: text-shadow 0.2s;
+}
+
+.editButton:hover {
+  text-shadow: 1px 1px 0px rgba(0, 0, 0, 0.2);
+}
+
+.filter-button:hover {
+  background-color: #1d6154;
+  color: white;
+}
+
+#introduction button {
+  align-self: flex-start;
+}
+
+.cloudy-background {
+  position: fixed;
+  width: 100%;
+  height: 100vh;
+  z-index: 1000;
+  top: 0;
+  z-index: 1;
+  background-color: rgba(0, 0, 0, 0.3);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.modal-window {
+  z-index: 3;
+  width: 80%;
+  height: 75vh;
+  position: relative;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: white;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.modal-portfolio {
+  max-width: 100%;
+  display: flex;
+  gap: 9px;
+  flex-wrap: wrap;
+  padding: 0 100px;
+}
+
+.modal-portfolio > figure {
+  width: 15%;
+}
+
+.modal-portfolio > figure > img {
+  width: 100%;
 }

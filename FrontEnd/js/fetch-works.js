@@ -5,7 +5,7 @@ import { API_URL } from "./config.js";
 //access the div gallery where works will be displayed
 const galleryElement = document.querySelector(".gallery");
 
-const displayWorks = (fetchedWorks) => {
+export const displayWorks = (parentElement, fetchedWorks) => {
   for (let work of fetchedWorks) {
     //create a figure for each work
     let figureElement = document.createElement("figure");
@@ -29,15 +29,15 @@ const displayWorks = (fetchedWorks) => {
     figureElement.appendChild(figcaptionElement);
 
     //add the created figure to the gallery element
-    galleryElement.appendChild(figureElement);
+    parentElement.appendChild(figureElement);
   }
 };
 
 // ================== FILTER FUNCTION ================== //
 
-const filterButtons = document.getElementsByTagName("button");
+const filterButtons = document.getElementsByClassName("filter-button");
 
-export const filterFunction = async () => {
+const filterFunction = async () => {
   for (let filter of filterButtons) {
     filter.addEventListener("click", function () {
       //if there is a previously selected filterButton, remove his selectedInput class
@@ -64,11 +64,11 @@ export const filterFunction = async () => {
         galleryElement.replaceChildren();
 
         //display the filter function result
-        displayWorks(filteredWorks);
+        displayWorks(galleryElement, filteredWorks);
       } else {
         //display all is selected so empty gallery div and display all localy stored works
         galleryElement.replaceChildren();
-        displayWorks(localStoredWorks);
+        displayWorks(galleryElement, localStoredWorks);
       }
     });
   }
@@ -86,7 +86,7 @@ const fetchWorks = await fetch(API_URL + "works", {
   })
   .then(function (works) {
     window.localStorage.setItem("works", JSON.stringify(works));
-    displayWorks(works);
+    displayWorks(galleryElement, works);
     filterFunction();
   })
   .catch(function (error) {
