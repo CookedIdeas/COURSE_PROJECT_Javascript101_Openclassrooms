@@ -343,10 +343,16 @@ body {
   padding-left: 20px;
 }
 
-.main-of-login-page > form > button {
+.main-of-login-page > form > div > button {
   background-color: #1d6154;
   color: white;
   padding: 10px 39px;
+}
+
+.login-error-msg {
+  color: red;
+  align-self: center;
+  visibility: hidden;
 }
 
 .main-of-login-page > form > a {

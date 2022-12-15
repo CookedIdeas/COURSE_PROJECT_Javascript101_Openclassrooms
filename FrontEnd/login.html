@@ -22,7 +22,7 @@
         <ul>
           <li>projets</li>
           <li>contact</li>
-          <li><a href="./connection.html">login</a></li>
+          <li><a href="./login.html">login</a></li>
           <li><img src="./assets/icons/instagram.png" alt="Instagram" /></li>
         </ul>
       </nav>
@@ -32,14 +32,20 @@
       <form>
         <div>
           <label>E-mail</label>
-          <input type="email" />
+          <input type="email" id="userEmailInput" />
         </div>
         <div>
           <label>Mot de passe</label>
-          <input type="password" />
+          <input type="password" id="userPwdinput" />
         </div>
 
-        <button type="submit">Se connecter</button>
+        <div>
+          <button type="submit" id="loginButton" class="selectedInput">
+            Se connecter
+          </button>
+          <span class="login-error-msg">Paire email/mdp érronée !</span>
+        </div>
+
         <a href="#">Mot de passe oublié</a>
       </form>
     </main>
@@ -51,5 +57,8 @@
         </ul>
       </nav>
     </footer>
+
+    <script type="module" src="./js/config.js"></script>
+    <script type="module" src="./js/login-user.js"></script>
   </body>
 </html>
