@@ -18,15 +18,31 @@
     <link rel="stylesheet" href="./assets/style.css" />
   </head>
   <body>
-    <div class="cloudy-background" style="display: none">
-      <div class="modal-window">
-        <i class="closePopupX fa-solid fa-xmark"></i>
-        <h2>Galerie photo</h2>
-        <div id="modal-portfolio" class="modal-portfolio"></div>
-        <button class="">Ajouter une photo</button>
-        <button class="">Supprimer la galerie</button>
+    <aside
+      id="modal1"
+      class="modal-window"
+      aria-hidden="true"
+      role="dialog"
+      aria-modal="false"
+      aria-labelledby="titlemodal"
+      style="display: none"
+    >
+      <div class="modal-wrapper js-modal-stop">
+        <button class="js-modal-close">
+          <i class="fa-solid fa-xmark"></i>
+          <span>Fermer la boite modale</span>
+        </button>
+        <h2 id="titlemodal">Galerie photo</h2>
+        <div class="modal-portfolio-container">
+          <div id="modal-portfolio" class="modal-portfolio"></div>
+        </div>
+
+        <button class="modal-add-button filter-button">
+          Ajouter une photo
+        </button>
+        <button class="modal-delete-button">Supprimer la galerie</button>
       </div>
-    </div>
+    </aside>
     <header>
       <a href="./index.html">
         <h1>Sophie Bluel <span>Architecte d'intérieur</span></h1>

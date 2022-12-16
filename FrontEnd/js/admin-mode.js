@@ -1,11 +1,13 @@
 import { getCookie } from "./cookie-management.js";
-import { displayWorks } from "./fetch-works.js";
+import { displayWorks, displayWorksInModal } from "./fetch-works.js";
 
 const userToken = getCookie("token");
 
 const appendEditElement = (parentElement) => {
   let editElement = document.createElement("button");
+  editElement.setAttribute("href", "#modal1");
   editElement.classList.add("editButton");
+  editElement.classList.add("js-modal");
   editElement.classList.add("defaultHoverDisabled");
   editElement.innerHTML = `<i class="fa-solid fa-pen-to-square"></i><span>modifier</span>`;
 
@@ -53,38 +55,106 @@ if (userToken) {
 
 //open modal window
 
-const modifyProjectsButton = document.querySelector(
-  "#portfolio > div > button"
-);
+const modifyProjectsButton = document.querySelectorAll(".js-modal");
 
-const openProjectsModalWindow = () => {
-  let cloudyBakgroundElement =
-    document.getElementsByClassName("cloudy-background");
-  cloudyBakgroundElement[0].style.display = "block";
+let modal = null;
+const focusableSelector = "button, a, input, textarea";
+let focusables = [];
+let previouslyFocusedElement = null;
+const modalPortfolio = document.getElementById("modal-portfolio");
 
-  const modalPortfolio = document.getElementById("modal-portfolio");
+const openProjectsModal = (e) => {
+  e.preventDefault();
+
+  const getTarget = () => {
+    if (e.target.parentElement.getAttribute("href")) {
+      return (modal = document.querySelector(
+        e.target.parentElement.getAttribute("href")
+      ));
+    } else {
+      return (modal = document.querySelector(e.target.getAttribute("href")));
+    }
+  };
+  getTarget();
+
+  focusables = Array.from(modal.querySelectorAll(focusableSelector));
+
+  previouslyFocusedElement = document.querySelector(":focus");
+  focusables[0].focus();
+
+  modal.style.display = null;
+  modal.setAttribute("aria-hidden", false);
+  modal.setAttribute("aria-modal", true);
+
+  modal.addEventListener("click", closeModal);
+  modal.querySelector(".js-modal-close").addEventListener("click", closeModal);
+  modal
+    .querySelector(".js-modal-stop")
+    .addEventListener("click", stopPropagation);
+
   const localStoredWorks = JSON.parse(window.localStorage.getItem("works"));
-  displayWorks(modalPortfolio, localStoredWorks);
-
-  //   const projectsModalWindow = document.createElement("div");
-  //   projectsModalWindow.classList.add("modal-window");
-  //   cloudyBakgroundElement[0].appendChild(projectsModalWindow);
-
-  cloudyBakgroundElement[0].addEventListener("click", function (e) {
-    e.stopPropagation();
-    let cloudyBakgroundElement =
-      document.getElementsByClassName("cloudy-background");
-    cloudyBakgroundElement[0].style.display = "none";
-    // projectsModalWindow.remove();
-  });
+  displayWorksInModal(modalPortfolio, localStoredWorks);
 };
 
-modifyProjectsButton.addEventListener("click", openProjectsModalWindow);
+const closeModal = (e) => {
+  if (modal === null) return;
+  if (previouslyFocusedElement !== null) {
+    previouslyFocusedElement.focus();
+  }
+  e.preventDefault();
 
-// let cloudyBakgroundElement =
-//   document.getElementsByClassName("cloudy-background");
-// cloudyBakgroundElement[0].style.display = "block";
+  modal.setAttribute("aria-hidden", true);
+  modal.removeAttribute("aria-modal");
+  modal.removeEventListener("click", closeModal);
+  modal
+    .querySelector(".js-modal-close")
+    .removeEventListener("click", closeModal);
+  modal
+    .querySelector(".js-modal-stop")
+    .removeEventListener("click", stopPropagation);
 
-// const projectsModalWindow = document.createElement("div");
-// projectsModalWindow.classList.add("modal-window");
-// cloudyBakgroundElement[0].appendChild(projectsModalWindow);
+  const hideModal = () => {
+    modal.style.display = "none";
+    modal.removeEventListener("animationend", hideModal);
+    modalPortfolio.replaceChildren();
+    modal = null;
+  };
+
+  modal.addEventListener("animationend", hideModal);
+};
+
+const stopPropagation = (e) => {
+  e.stopPropagation();
+};
+
+const focusInModal = (e) => {
+  e.preventDefault();
+  let index = focusables.findIndex((f) => f === modal.querySelector(":focus"));
+  if (e.shiftKey === true) {
+    index--;
+  } else {
+    index++;
+  }
+
+  if (index >= focusables.length) {
+    index = 0;
+  }
+  if (index < 0) {
+    index = focusables.length - 1;
+  }
+  console.log(index);
+  focusables[index].focus();
+};
+
+modifyProjectsButton.forEach((a) => {
+  a.addEventListener("click", openProjectsModal);
+});
+
+window.addEventListener("keydown", function (e) {
+  if (e.key === "Escape" || e.key === "Esc") {
+    closeModal(e);
+  }
+  if (e.key === "Tab" && modal != null) {
+    focusInModal(e);
+  }
+});
