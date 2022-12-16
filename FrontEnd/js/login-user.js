@@ -1,13 +1,13 @@
 import { API_URL } from "./config.js";
-import { eraseCookie, setCookie } from "./cookie-management.js";
+import { eraseCookie, getCookie, setCookie } from "./cookie-management.js";
 
-const loginButton = document.getElementById("loginButton");
+// const loginButton = document.getElementById("loginButton");
 const loginErrorMsg = document.querySelector(".login-error-msg");
 
 //erase token cookie before to test login function
-eraseCookie("token");
+// eraseCookie("token");
 
-const testLogin = (usersInputs) => {
+export const testLogin = (usersInputs) => {
   const fetchLogin = fetch(API_URL + "users/login", {
     headers: {
       Accept: "application/json",
@@ -30,6 +30,7 @@ const testLogin = (usersInputs) => {
       //response is 200, store token in cookie
       const userToken = user.token;
       setCookie("token", userToken, 24);
+      console.log(getCookie("token"));
       location.replace("http://127.0.0.1:5500/FrontEnd/index.html");
     })
     .catch(function (error) {
@@ -37,7 +38,7 @@ const testLogin = (usersInputs) => {
     });
 };
 
-const logUser = (e) => {
+export const logUser = (e) => {
   e.preventDefault();
 
   //get inputs value and create an object with values
@@ -48,8 +49,10 @@ const logUser = (e) => {
     password: userPwd,
   };
 
+  console.log(reqBody);
+
   //launch post request with the inputs object
   testLogin(reqBody);
 };
 
-loginButton.addEventListener("click", logUser);
+// loginButton.addEventListener("click", logUser);

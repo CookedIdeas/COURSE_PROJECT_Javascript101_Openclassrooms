@@ -3,9 +3,10 @@ import { API_URL } from "./config.js";
 // ================== DISPLAY FUNCTION ================== //
 
 //access the div gallery where works will be displayed
-const galleryElement = document.querySelector(".gallery");
 
 export const displayWorks = (parentElement, fetchedWorks) => {
+  let galleryElement = document.querySelector(".gallery");
+
   for (let work of fetchedWorks) {
     //create a figure for each work
     let figureElement = document.createElement("figure");
@@ -87,9 +88,9 @@ export const displayWorksInModal = (parentElement, fetchedWorks) => {
 
 // ================== FILTER FUNCTION ================== //
 
-const filterButtons = document.getElementsByClassName("filter-button");
+export const filterFunction = async () => {
+  const filterButtons = document.getElementsByClassName("filter-button");
 
-const filterFunction = async () => {
   for (let filter of filterButtons) {
     filter.addEventListener("click", function () {
       //if there is a previously selected filterButton, remove his selectedInput class
@@ -104,7 +105,7 @@ const filterFunction = async () => {
 
       //get the categoryId of the clicked filterButton
       const selectedCategory = Number(this.value);
-
+      let galleryElement = document.querySelector(".gallery");
       //if categoryId > 0, clicked filterButton != all
       if (selectedCategory > 0) {
         //filter localy stored works by their categoryId
@@ -113,6 +114,7 @@ const filterFunction = async () => {
         });
 
         //empty the gallery div
+
         galleryElement.replaceChildren();
 
         //display the filter function result
@@ -127,20 +129,25 @@ const filterFunction = async () => {
 };
 
 //get works and if response is ok, display works in page
-const fetchWorks = await fetch(API_URL + "works", {
-  method: "GET",
-})
-  .then(function (res) {
-    if (res.ok) {
-      // console.log(res.json());
-      return res.json();
-    }
+export const fetchWorkFunction = () => {
+  const fetchWorks = fetch(API_URL + "works", {
+    method: "GET",
   })
-  .then(function (works) {
-    window.localStorage.setItem("works", JSON.stringify(works));
-    displayWorks(galleryElement, works);
-    filterFunction();
-  })
-  .catch(function (error) {
-    console.log(error);
-  });
+    .then(function (res) {
+      if (res.ok) {
+        // console.log(res.json());
+        return res.json();
+      }
+    })
+    .then(function (works) {
+      window.localStorage.setItem("works", JSON.stringify(works));
+      let galleryElement = document.querySelector(".gallery");
+      if (galleryElement !== null) {
+        displayWorks(galleryElement, works);
+      }
+      filterFunction();
+    })
+    .catch(function (error) {
+      console.log(error);
+    });
+};
