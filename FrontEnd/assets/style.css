@@ -624,6 +624,12 @@ i {
   color: white;
 }
 
+.modal-arrows-icon {
+  padding: 3px;
+  font-size: 9px;
+  color: white;
+}
+
 .modal-add-button {
   color: white;
   background-color: #1d6154;

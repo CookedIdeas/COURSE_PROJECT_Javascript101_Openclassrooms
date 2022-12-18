@@ -1,4 +1,5 @@
 import { API_URL } from "./config.js";
+import { eventListenerToTrashIcon } from "./delete-work.js";
 
 // ================== DISPLAY FUNCTION ================== //
 
@@ -36,6 +37,7 @@ export const displayWorks = (parentElement, fetchedWorks) => {
 
 export const displayWorksInModal = (parentElement, fetchedWorks) => {
   for (let work of fetchedWorks) {
+    console.log(work);
     //create a figure for each work
     let figureElement = document.createElement("figure");
     //give data-category with the right category
@@ -53,6 +55,8 @@ export const displayWorksInModal = (parentElement, fetchedWorks) => {
     trashIcon.classList.add("fa-solid");
     trashIcon.classList.add("fa-trash-can");
     trashIcon.classList.add("modal-trash-icon");
+    trashIcon.setAttribute("data-photo-id", work.id);
+    // trashIcon.setAttribute("data-user-id", work.userId);
 
     let trashIconContainer = document.createElement("a");
     trashIconContainer.classList.add("modal-trash-icon-container");
@@ -72,7 +76,7 @@ export const displayWorksInModal = (parentElement, fetchedWorks) => {
       let displaceIcon = document.createElement("i");
       displaceIcon.classList.add("fa-solid");
       displaceIcon.classList.add("fa-arrows-up-down-left-right");
-      displaceIcon.classList.add("modal-trash-icon");
+      displaceIcon.classList.add("modal-arrows-icon");
 
       let displaceIconContainer = document.createElement("a");
       displaceIconContainer.classList.add("modal-trash-icon-container");
@@ -84,6 +88,7 @@ export const displayWorksInModal = (parentElement, fetchedWorks) => {
     //add the created figure to the gallery element
     parentElement.appendChild(figureElement);
   }
+  eventListenerToTrashIcon();
 };
 
 // ================== FILTER FUNCTION ================== //
