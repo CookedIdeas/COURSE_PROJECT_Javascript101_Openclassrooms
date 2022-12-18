@@ -95,10 +95,33 @@ export const enableAdminMode = (token) => {
     modal
       .querySelector(".js-modal-stop")
       .addEventListener("click", stopPropagation); //stop propagation to prevent closing on click inside the modal wrapper
-
+    modal
+      .querySelector(".js-modal-previous")
+      .addEventListener("click", goToPreviousModal);
+    modal
+      .querySelector(".js-modal-previous")
+      .addEventListener("click", stopPropagation);
     //display works in modal window
     const localStoredWorks = JSON.parse(window.localStorage.getItem("works"));
     displayWorksInModal(modalPortfolio, localStoredWorks);
+  };
+
+  const addPhotoButton = document.querySelector(".modal-add-button");
+  const modalWorksDisplay = document.querySelector("#modal-opening");
+  const modalAddPhoto = document.querySelector("#modal-add-photo");
+
+  const openAddPhotoModal = (e) => {
+    e.preventDefault;
+    console.log("clicked");
+    modalWorksDisplay.style.display = "none";
+    modalAddPhoto.style.display = "flex";
+  };
+
+  addPhotoButton.addEventListener("click", openAddPhotoModal);
+
+  const goToPreviousModal = () => {
+    modalWorksDisplay.style.display = "flex";
+    modalAddPhoto.style.display = "none";
   };
 
   const closeModal = (e) => {
@@ -123,6 +146,8 @@ export const enableAdminMode = (token) => {
     //hide modal and remove animation eventlistener AFTER closing animations
     const hideModal = () => {
       modal.style.display = "none";
+      modalAddPhoto.style.display = "none";
+      modalWorksDisplay.style.display = "flex";
       modal.removeEventListener("animationend", hideModal);
       modalPortfolio.replaceChildren();
       modal = null;

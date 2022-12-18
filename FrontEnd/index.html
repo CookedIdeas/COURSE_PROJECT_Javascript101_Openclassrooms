@@ -32,15 +32,55 @@
           <i class="fa-solid fa-xmark"></i>
           <span>Fermer la boite modale</span>
         </button>
-        <h2 id="titlemodal">Galerie photo</h2>
-        <div class="modal-portfolio-container">
-          <div id="modal-portfolio" class="modal-portfolio"></div>
+        <div id="modal-opening" class="modal-works-display">
+          <h2 id="titlemodal">Galerie photo</h2>
+          <div class="modal-portfolio-container">
+            <div id="modal-portfolio" class="modal-portfolio"></div>
+          </div>
+
+          <button class="modal-add-button filter-button">
+            Ajouter une photo
+          </button>
+          <button class="modal-delete-button">Supprimer la galerie</button>
+        </div>
+        <div id="modal-add-photo" class="modal-works-display modal-add-photo">
+          <button class="modal-previous js-modal-previous">
+            <i class="fa-solid fa-arrow-left"></i>
+            <span>Retour arrière</span>
+          </button>
+          <h2 class="sub-title-modal">Ajout photo</h2>
+          <div class="modal-add-photo-wrapper">
+            
+            <i class="fa-regular fa-image"></i>
+            <div><button class="filter-button">+ Ajouter photo</button>
+            <span>jpg, png: 4mo max</span>
+            <img class="modal-added-photo" src=null />
+                    </div>
+            
+          </div>
+
+          <form>
+            <div>
+              <label>Titre</label>
+              <input type="text" id="photoTitleInput" required />
+            </div>
+            <div>
+              <label>Catégorie</label>
+              <select type="select" name="categoryList" id="photoCategoryInput" required>
+                <option disabled selected value>Sélectionnez une catégorie </option>
+              <option value="1">Objets</option>
+              <option value="2">Appartements</option>
+              <option value="3">Hôtels &amp; restaurants</option>
+              </select>
+            </div>
+          </form>
+
+          <button class="modal-validate-button filter-button" type="submit" disabled>
+            Valider
+          </button>
         </div>
 
-        <button class="modal-add-button filter-button">
-          Ajouter une photo
-        </button>
-        <button class="modal-delete-button">Supprimer la galerie</button>
+        </div>
       </div>
     </aside>
     <header>
@@ -95,7 +135,7 @@
             Appartements
           </button>
           <button class="filter-button" id="hostelRestaurantFilter" value="3">
-            Hôtels & restaurants
+            Hôtels &amp; restaurants
           </button>
         </div>
         <div class="gallery"></div>
@@ -128,9 +168,10 @@
     <script type="module" src="./js/fetch-works.js"></script>
     <script type="module" src="./js/admin-mode.js"></script> -->
 
-    <script type="module" src="./dist/app.bundle.js"></script>
+    <!-- <script type="module" src="./dist/app.bundle.js"></script>
 
-    <script src="./dist/polyfill.bundle.js"></script>
+    <script src="./dist/polyfill.bundle.js"></script> -->
+    <script type="module" src="./js/index.js"></script>
     <!-- <script type="module" src="./dist/app.bundle.js"></script> -->
   </body>
 </html>

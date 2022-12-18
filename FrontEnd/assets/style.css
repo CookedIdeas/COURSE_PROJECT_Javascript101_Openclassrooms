@@ -370,13 +370,14 @@ body {
   gap: 7px;
 }
 
-.main-of-login-page > form > div > input {
+input,
+select {
   width: 380px;
   height: 50px;
   border: none;
   background: #ffffff;
   box-shadow: 0px 4px 14px rgba(0, 0, 0, 0.2);
-  padding-left: 20px;
+  padding: 0 20px;
 }
 
 .main-of-login-page > form > div > button {
@@ -477,18 +478,7 @@ i {
   align-self: flex-start;
 }
 
-.cloudy-background {
-  position: fixed;
-  width: 100%;
-  height: 100vh;
-  z-index: 1000;
-  top: 0;
-  z-index: 1;
-  background-color: rgba(0, 0, 0, 0.3);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
+/* ============ MODAL WINDOW ============ */
 
 .modal-window {
   position: fixed;
@@ -504,6 +494,7 @@ i {
 }
 
 .modal-wrapper {
+  position: relative;
   background-color: #fff;
   width: 1200px;
   max-width: calc(100vw - 20px);
@@ -511,11 +502,6 @@ i {
   overflow: auto;
   padding: 20px;
   animation: slideFromTop 0.5s both;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 23px;
-  border-radius: 10px;
 }
 
 .modal-window[aria-hidden="true"] {
@@ -567,11 +553,23 @@ i {
 }
 
 .js-modal-close {
-  align-self: flex-end;
+  position: absolute;
+  top: 10px;
+  right: 10px;
   border: none;
   background: transparent;
   font-size: 15px;
   margin-bottom: -30px;
+}
+
+/* ============ MODAL WINDOW - WORKS DISPLAY ============ */
+
+.modal-works-display {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 23px;
+  border-radius: 10px;
 }
 
 .modal-portfolio-container {
@@ -637,4 +635,109 @@ i {
   border: none;
   background-color: transparent;
   color: #d65353;
+}
+
+/* ============ MODAL WINDOW - ADD PHOTO ============ */
+
+.modal-add-photo {
+  display: none;
+}
+
+.modal-previous > span {
+  display: none;
+}
+
+.modal-previous {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  border: none;
+  background: transparent;
+  font-size: 15px;
+  margin-bottom: -30px;
+}
+
+.sub-title-modal {
+  font-family: "Work Sans";
+  font-weight: 400;
+  font-size: 26px;
+  color: black;
+}
+
+.modal-add-photo-wrapper {
+  height: 170px;
+  width: 420px;
+  background-color: #e8f1f6;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 21px;
+}
+
+.modal-add-photo-wrapper > i {
+  color: #b9c5cc;
+  font-size: 58px;
+}
+
+.modal-add-photo-wrapper > div {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 7px;
+}
+
+.modal-add-photo-wrapper > div > button {
+  background-color: #cbd6dc;
+  color: #306685;
+  border: none;
+  padding: 10px 33px;
+}
+
+.modal-add-photo-wrapper > div > span {
+  color: #444444;
+  font-size: 10px;
+}
+
+.modal-add-photo > form {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: flex-start;
+  gap: 21px;
+  padding-bottom: 40px;
+  border-bottom: 1px solid #b3b3b3;
+}
+
+.modal-add-photo > form > div {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: flex-start;
+  gap: 10px;
+}
+
+.modal-add-photo > form > div > input,
+select {
+  width: 420px;
+}
+
+.modal-validate-button {
+  background-color: #1d6154;
+  color: white;
+  border: none;
+  padding: 10px 80px;
+  font-size: 14px;
+}
+
+.modal-validate-button:disabled {
+  background-color: #a7a7a7;
+  color: white;
+
+  cursor: auto;
+}
+
+.modal-added-photo {
+  display: none;
 }
