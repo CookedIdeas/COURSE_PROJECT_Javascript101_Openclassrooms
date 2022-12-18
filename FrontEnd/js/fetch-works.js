@@ -1,5 +1,6 @@
+import { eventListenerToTrashIcon } from "./admin-mode.js";
 import { API_URL } from "./config.js";
-import { eventListenerToTrashIcon } from "./delete-work.js";
+import { getCookie } from "./cookie-management.js";
 
 // ================== DISPLAY FUNCTION ================== //
 
@@ -37,7 +38,7 @@ export const displayWorks = (parentElement, fetchedWorks) => {
 
 export const displayWorksInModal = (parentElement, fetchedWorks) => {
   for (let work of fetchedWorks) {
-    console.log(work);
+    // console.log(work);
     //create a figure for each work
     let figureElement = document.createElement("figure");
     //give data-category with the right category

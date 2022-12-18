@@ -1,3 +1,4 @@
+import { API_URL } from "./config.js";
 import { getCookie } from "./cookie-management.js";
 import { displayWorks, displayWorksInModal } from "./fetch-works.js";
 
@@ -106,6 +107,8 @@ export const enableAdminMode = (token) => {
     displayWorksInModal(modalPortfolio, localStoredWorks);
   };
 
+  //ADD PHOTO MODAL
+
   const addPhotoButton = document.querySelector(".modal-add-button");
   const modalWorksDisplay = document.querySelector("#modal-opening");
   const modalAddPhoto = document.querySelector("#modal-add-photo");
@@ -123,6 +126,73 @@ export const enableAdminMode = (token) => {
     modalWorksDisplay.style.display = "flex";
     modalAddPhoto.style.display = "none";
   };
+
+  //ADD PHOTO FORM
+  const selectedImagePreviewElement = document.getElementById("img-preview");
+  const chooseImageInput = document.getElementById("select-photo");
+  const chooseImageLabel = document.getElementById("select-photo-label");
+  const addPhotoWrapper = document.querySelector(".modal-add-photo-wrapper");
+
+  const addPhotoWrapperOtherElements = [
+    chooseImageInput,
+    document.querySelector(".modal-add-photo-wrapper > i"),
+    document.querySelector(".js-image-type"),
+  ];
+  console.log(addPhotoWrapperOtherElements);
+
+  const getImgData = () => {
+    const files = chooseImageInput.files[0];
+    if (files) {
+      const fileReader = new FileReader();
+      fileReader.readAsDataURL(files);
+      fileReader.addEventListener("load", function () {
+        selectedImagePreviewElement.style.display = "block";
+        selectedImagePreviewElement.innerHTML =
+          '<img src="' + this.result + '" />';
+      });
+    }
+  };
+
+  chooseImageInput.addEventListener("change", function () {
+    getImgData();
+    addPhotoWrapperOtherElements.forEach((element) => {
+      element.style.display = "none";
+    });
+    chooseImageLabel.classList.add("modal-change-selected-photo-btn");
+    chooseImageLabel.innerHTML = "Changer photo";
+  });
+
+  const addPhotoInputs = document.querySelectorAll(".js-modal-add-photo-input");
+  const validateAddPhotoButton = document.getElementsByClassName(
+    "modal-validate-button"
+  )[0];
+
+  const formErrorMeassage =
+    document.getElementsByClassName("form-error-msg")[0];
+
+  const isAddPhotoFormFullfilled = () => {
+    const addedPhoto = chooseImageInput.files[0];
+    const titleValue = document.getElementById("photoTitleInput").value;
+    const categoryValue = document.getElementById("photoCategoryInput").value;
+    if (addedPhoto !== undefined && titleValue && categoryValue) {
+      console.log("fullfilled");
+      validateAddPhotoButton.removeAttribute("disabled");
+      formErrorMeassage.style.visibility = "hidden";
+    } else {
+      validateAddPhotoButton.setAttribute("disabled", true);
+      formErrorMeassage.style.visibility = "visible";
+    }
+  };
+
+  addPhotoInputs.forEach((input) => {
+    input.addEventListener("input", isAddPhotoFormFullfilled);
+  });
+
+  const sendPhoto = (e) => {
+    e.preventDefault();
+  };
+
+  validateAddPhotoButton.addEventListener("click", sendPhoto);
 
   const closeModal = (e) => {
     if (modal === null) return;
@@ -194,4 +264,45 @@ export const enableAdminMode = (token) => {
       focusInModal(e);
     }
   });
+};
+
+// ================== DELETE THIS WORK ================== //
+
+//<figure data-category="1"><img crossorigin="anonymous" src="http://localhost:5678/images/abajour-tahina1651286843956.png" alt="Abajour Tahina"><figcaption>Abajour Tahina</figcaption></figure>
+
+{
+  /* <figure data-category="2"><img crossorigin="anonymous" src="http://localhost:5678/images/appartement-paris-v1651287270508.png" alt="Appartement Paris V"><a>éditer</a><a class="modal-trash-icon-container"><i class="fa-solid fa-trash-can modal-trash-icon" data-photo-id="2"></i></a><a class="modal-trash-icon-container modal-displace-icon-container"><i class="fa-solid fa-arrows-up-down-left-right modal-arrows-icon"></i></a></figure> 
+  <figure data-category="3"><img crossorigin="anonymous" src="http://localhost:5678/images/restaurant-sushisen-londres1651287319271.png" alt="Restaurant Sushisen - Londres"><figcaption>Restaurant Sushisen - Londres</figcaption></figure>*/
+}
+
+const deleteThisWorkRequest = (workId) => {
+  const deleteWork = fetch(API_URL + "works/" + workId, {
+    headers: {
+      Authorization: "BEARER " + getCookie("token"),
+    },
+    method: "DELETE",
+  })
+    .then(function (res) {
+      if (res.ok) {
+        debugger;
+        // openProjectsModal();
+        return res.json();
+      }
+    })
+    .then(function () {})
+    .catch(function (error) {
+      console.log(error);
+    });
+};
+const deleteThisWork = (e) => {
+  const thisId = e.target.getAttribute("data-photo-id");
+  deleteThisWorkRequest(thisId);
+};
+
+export const eventListenerToTrashIcon = () => {
+  const deleteIcon = document.getElementsByClassName("modal-trash-icon");
+
+  for (let deleteButton of deleteIcon) {
+    deleteButton.addEventListener("click", deleteThisWork);
+  }
 };
