@@ -139,10 +139,14 @@ table {
 }
 /** end reset css**/
 body {
-  max-width: 1140px;
-  margin: auto;
+  /* max-width: 1140px;
+  margin: auto; */
   font-family: "Work Sans";
   font-size: 14px;
+}
+main {
+  max-width: 1140px;
+  margin: auto;
 }
 
 header {
@@ -243,8 +247,13 @@ li:hover {
   grid-row-gap: 20px;
 }
 
+.gallery figure {
+  min-height: 200px;
+}
+
 .gallery img {
-  width: 100%;
+  max-width: 100%;
+  min-height: 435px;
 }
 #contact {
   width: 50%;
@@ -412,10 +421,6 @@ select {
   margin: 0;
 }
 
-.footer-of-login-page > nav > ul > li {
-  /* margin-right: 100px; */
-}
-
 /* ============ ADMIN MODE ============ */
 
 .admin-headband {
@@ -427,6 +432,7 @@ select {
   align-items: center;
   gap: 20px;
   position: relative;
+  /* padding-left:  */
   /* z-index: 2; */
 }
 

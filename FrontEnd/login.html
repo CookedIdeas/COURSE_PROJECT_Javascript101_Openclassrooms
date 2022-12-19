@@ -14,51 +14,53 @@
     <link rel="stylesheet" href="./assets/style.css" />
   </head>
   <body>
-    <header>
-      <a href="./index.html">
-        <h1>Sophie Bluel <span>Architecte d'inteérieur</span></h1>
-      </a>
-      <nav>
-        <ul>
-          <li>projets</li>
-          <li>contact</li>
-          <li><a href="./login.html">login</a></li>
-          <li><img src="./assets/icons/instagram.png" alt="Instagram" /></li>
-        </ul>
-      </nav>
-    </header>
-    <main class="main-of-login-page">
-      <h2>Log in</h2>
-      <form>
-        <div>
-          <label>E-mail</label>
-          <input type="email" id="userEmailInput" required />
-        </div>
-        <div>
-          <label>Mot de passe</label>
-          <input type="password" id="userPwdinput" required />
-        </div>
+    <main>
+      <header>
+        <a href="./index.html">
+          <h1>Sophie Bluel <span>Architecte d'inteérieur</span></h1>
+        </a>
+        <nav>
+          <ul>
+            <li>projets</li>
+            <li>contact</li>
+            <li><a href="./login.html">login</a></li>
+            <li><img src="./assets/icons/instagram.png" alt="Instagram" /></li>
+          </ul>
+        </nav>
+      </header>
+      <section class="main-of-login-page">
+        <h2>Log in</h2>
+        <form>
+          <div>
+            <label>E-mail</label>
+            <input type="email" id="userEmailInput" required />
+          </div>
+          <div>
+            <label>Mot de passe</label>
+            <input type="password" id="userPwdinput" required />
+          </div>
 
-        <div>
-          <button type="submit" id="loginButton" class="selectedInput">
-            Se connecter
-          </button>
-          <span class="login-error-msg"
-            >Erreur dans l’identifiant ou le mot de passe</span
-          >
-        </div>
+          <div>
+            <button type="submit" id="loginButton" class="selectedInput">
+              Se connecter
+            </button>
+            <span class="login-error-msg"
+              >Erreur dans l’identifiant ou le mot de passe</span
+            >
+          </div>
 
-        <a href="#">Mot de passe oublié</a>
-      </form>
+          <a href="#">Mot de passe oublié</a>
+        </form>
+      </section>
+
+      <footer class="footer-of-login-page">
+        <nav>
+          <ul>
+            <li>Mentions Légales</li>
+          </ul>
+        </nav>
+      </footer>
     </main>
-
-    <footer class="footer-of-login-page">
-      <nav>
-        <ul>
-          <li>Mentions Légales</li>
-        </ul>
-      </nav>
-    </footer>
 
     <!-- <script type="module" src="./js/config.js"></script>
     <script type="module" src="./js/login-user.js"></script> -->
