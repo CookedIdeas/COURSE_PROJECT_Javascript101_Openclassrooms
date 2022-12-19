@@ -734,8 +734,6 @@ i {
   align-items: flex-start;
   justify-content: flex-start;
   gap: 21px;
-  padding-bottom: 40px;
-  border-bottom: 1px solid #b3b3b3;
 }
 
 .modal-add-photo-input-wrapper {
@@ -744,6 +742,11 @@ i {
   align-items: flex-start;
   justify-content: flex-start;
   gap: 10px;
+}
+
+.modal-photo-inputs {
+  padding-bottom: 40px;
+  border-bottom: 1px solid #b3b3b3;
 }
 
 .modal-add-photo > form > div > input,
@@ -779,6 +782,7 @@ select {
 }
 
 .modal-add-photo-validate-div {
+  align-self: center;
   display: flex;
   flex-direction: column;
   align-items: center;

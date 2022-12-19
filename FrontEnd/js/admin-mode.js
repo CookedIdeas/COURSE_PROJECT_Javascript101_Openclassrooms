@@ -1,8 +1,19 @@
 import { API_URL } from "./config.js";
 import { getCookie } from "./cookie-management.js";
-import { displayWorks, displayWorksInModal } from "./fetch-works.js";
+import {
+  deleteThisWorkRequest,
+  displayWorks,
+  displayWorksInModal,
+  postWorkRequest,
+} from "./fetch-works.js";
 
 // const userToken = getCookie("token");
+
+const categoryArray = ["Objets", "Appartements", "Hotels & restaurants"];
+const getCategoryName = (categoryId) => {
+  let catName = categoryArray[categoryId - 1];
+  return catName;
+};
 
 const appendEditElement = (parentElement) => {
   let editElement = document.createElement("button");
@@ -61,6 +72,7 @@ export const enableAdminMode = (token) => {
   let modal = null;
   const focusableSelector = "button, a, input, textarea";
   let focusables = [];
+  let addPhotoFocusables = [];
   let previouslyFocusedElement = null;
   const modalPortfolio = document.getElementById("modal-portfolio");
 
@@ -115,6 +127,7 @@ export const enableAdminMode = (token) => {
 
   const openAddPhotoModal = (e) => {
     e.preventDefault;
+    addPhotoFocusables = Array.from(modal.querySelectorAll(focusableSelector));
     console.log("clicked");
     modalWorksDisplay.style.display = "none";
     modalAddPhoto.style.display = "flex";
@@ -138,7 +151,6 @@ export const enableAdminMode = (token) => {
     document.querySelector(".modal-add-photo-wrapper > i"),
     document.querySelector(".js-image-type"),
   ];
-  console.log(addPhotoWrapperOtherElements);
 
   const getImgData = () => {
     const files = chooseImageInput.files[0];
@@ -170,6 +182,8 @@ export const enableAdminMode = (token) => {
   const formErrorMeassage =
     document.getElementsByClassName("form-error-msg")[0];
 
+  const workData = new FormData();
+
   const isAddPhotoFormFullfilled = () => {
     const addedPhoto = chooseImageInput.files[0];
     const titleValue = document.getElementById("photoTitleInput").value;
@@ -188,11 +202,17 @@ export const enableAdminMode = (token) => {
     input.addEventListener("input", isAddPhotoFormFullfilled);
   });
 
-  const sendPhoto = (e) => {
+  // ================== POST WORK ================== //
+
+  const formElem = document.getElementById("add-work-form");
+
+  formElem.onsubmit = async (e) => {
     e.preventDefault();
+    const workData = new FormData(formElem);
+    postWorkRequest(workData);
   };
 
-  validateAddPhotoButton.addEventListener("click", sendPhoto);
+  // ================== CLOSE MODAL ================== //
 
   const closeModal = (e) => {
     if (modal === null) return;
@@ -268,41 +288,8 @@ export const enableAdminMode = (token) => {
 
 // ================== DELETE THIS WORK ================== //
 
-//<figure data-category="1"><img crossorigin="anonymous" src="http://localhost:5678/images/abajour-tahina1651286843956.png" alt="Abajour Tahina"><figcaption>Abajour Tahina</figcaption></figure>
-
-{
-  /* <figure data-category="2"><img crossorigin="anonymous" src="http://localhost:5678/images/appartement-paris-v1651287270508.png" alt="Appartement Paris V"><a>éditer</a><a class="modal-trash-icon-container"><i class="fa-solid fa-trash-can modal-trash-icon" data-photo-id="2"></i></a><a class="modal-trash-icon-container modal-displace-icon-container"><i class="fa-solid fa-arrows-up-down-left-right modal-arrows-icon"></i></a></figure> 
-  <figure data-category="3"><img crossorigin="anonymous" src="http://localhost:5678/images/restaurant-sushisen-londres1651287319271.png" alt="Restaurant Sushisen - Londres"><figcaption>Restaurant Sushisen - Londres</figcaption></figure>*/
-}
-
-const deleteThisWorkRequest = (workId) => {
-  const deleteWork = fetch(API_URL + "works/" + workId, {
-    headers: {
-      Authorization: "BEARER " + getCookie("token"),
-    },
-    method: "DELETE",
-  })
-    .then(function (res) {
-      if (res.ok) {
-        debugger;
-        // openProjectsModal();
-        return res.json();
-      }
-    })
-    .then(function () {})
-    .catch(function (error) {
-      console.log(error);
-    });
-};
-const deleteThisWork = (e) => {
+export const deleteThisWork = (e) => {
+  e.preventDefault();
   const thisId = e.target.getAttribute("data-photo-id");
   deleteThisWorkRequest(thisId);
-};
-
-export const eventListenerToTrashIcon = () => {
-  const deleteIcon = document.getElementsByClassName("modal-trash-icon");
-
-  for (let deleteButton of deleteIcon) {
-    deleteButton.addEventListener("click", deleteThisWork);
-  }
 };

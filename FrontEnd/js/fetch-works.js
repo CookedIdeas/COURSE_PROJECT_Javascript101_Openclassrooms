@@ -1,4 +1,4 @@
-import { eventListenerToTrashIcon } from "./admin-mode.js";
+import { deleteThisWork } from "./admin-mode.js";
 import { API_URL } from "./config.js";
 import { getCookie } from "./cookie-management.js";
 
@@ -8,7 +8,7 @@ import { getCookie } from "./cookie-management.js";
 
 export const displayWorks = (parentElement, fetchedWorks) => {
   let galleryElement = document.querySelector(".gallery");
-
+  console.log(fetchedWorks);
   for (let work of fetchedWorks) {
     //create a figure for each work
     let figureElement = document.createElement("figure");
@@ -58,6 +58,7 @@ export const displayWorksInModal = (parentElement, fetchedWorks) => {
     trashIcon.classList.add("modal-trash-icon");
     trashIcon.setAttribute("data-photo-id", work.id);
     // trashIcon.setAttribute("data-user-id", work.userId);
+    trashIcon.addEventListener("click", deleteThisWork);
 
     let trashIconContainer = document.createElement("a");
     trashIconContainer.classList.add("modal-trash-icon-container");
@@ -89,7 +90,7 @@ export const displayWorksInModal = (parentElement, fetchedWorks) => {
     //add the created figure to the gallery element
     parentElement.appendChild(figureElement);
   }
-  eventListenerToTrashIcon();
+  // eventListenerToTrashIcon();
 };
 
 // ================== FILTER FUNCTION ================== //
@@ -152,6 +153,48 @@ export const fetchWorkFunction = () => {
         displayWorks(galleryElement, works);
       }
       filterFunction();
+    })
+    .catch(function (error) {
+      console.log(error);
+    });
+};
+
+// ================== DELETE THIS WORK ================== //
+
+export const deleteThisWorkRequest = (workId) => {
+  const deleteWork = fetch(API_URL + "works/" + workId, {
+    headers: {
+      Authorization: "BEARER " + getCookie("token"),
+    },
+    method: "DELETE",
+  })
+    .then(function (res) {
+      if (res.ok) {
+        // openProjectsModal();
+        return res.json();
+      }
+    })
+    .then(function (work) {
+      console.log(work);
+    })
+    .catch(function (error) {
+      console.log(error);
+    });
+};
+
+// ================== POST WORK ================== //
+
+export const postWorkRequest = (data) => {
+  console.log(JSON.stringify(Object.fromEntries(data)));
+  let response = fetch(API_URL + "works", {
+    headers: {
+      Authorization: "BEARER " + getCookie("token"),
+    },
+    method: "POST",
+    body: data,
+  })
+    .then(function (response) {
+      console.log(response.status);
     })
     .catch(function (error) {
       console.log(error);

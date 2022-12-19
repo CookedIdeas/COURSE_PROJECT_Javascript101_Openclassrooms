@@ -28,8 +28,11 @@ export const testLogin = (usersInputs) => {
     })
     .then(function (user) {
       //response is 200, store token in cookie
+      console.log(user);
       const userToken = user.token;
       setCookie("token", userToken, 24);
+      const userId = user.userId;
+      setCookie("userId", userId, 24);
       console.log(getCookie("token"));
       location.replace("http://127.0.0.1:5500/FrontEnd/index.html");
     })

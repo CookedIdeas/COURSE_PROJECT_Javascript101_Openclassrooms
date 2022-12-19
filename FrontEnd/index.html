@@ -50,45 +50,72 @@
           </button>
           <h2 class="sub-title-modal">Ajout photo</h2>
 
-
-          <form>
+          <form id="add-work-form">
             <div class="modal-add-photo-wrapper">
-            
               <i class="fa-regular fa-image"></i>
               <div>
                 <div class="add-photo-button-wrapper">
                   <div id="img-preview" class="modal-preview-photo"></div>
-                  <label id="select-photo-label" for="select-photo" class="add-photo-button">+ Ajouter photo</label>
-                  <input id="select-photo" style="visibility:hidden;" type="file" accept="image/png, image/jpeg, image/jpg" class="js-modal-add-photo-input">
+                  <label
+                    id="select-photo-label"
+                    for="select-photo"
+                    class="add-photo-button"
+                    >+ Ajouter photo</label
+                  >
+                  <input
+                    id="select-photo"
+                    style="visibility: hidden"
+                    type="file"
+                    name="image"
+                    accept="image/png, image/jpeg, image/jpg"
+                    class="js-modal-add-photo-input"
+                  />
                 </div>
                 <span class="js-image-type">jpg, png: 4mo max</span>
-                
               </div>
             </div>
             <div class="modal-add-photo-input-wrapper">
               <label>Titre</label>
-              <input type="text" id="photoTitleInput" class="js-modal-add-photo-input" required />
+              <input
+                type="text"
+                id="photoTitleInput"
+                name="title"
+                class="js-modal-add-photo-input"
+                required
+              />
             </div>
-            <div class="modal-add-photo-input-wrapper">
+            <div class="modal-add-photo-input-wrapper modal-photo-inputs">
               <label>Catégorie</label>
-              <select type="select" name="categoryList" id="photoCategoryInput" class="js-modal-add-photo-input" required>
-                <option disabled selected value>Sélectionnez une catégorie </option>
-              <option value="1">Objets</option>
-              <option value="2">Appartements</option>
-              <option value="3">Hôtels &amp; restaurants</option>
+              <select
+                type="select"
+                name="category"
+                id="photoCategoryInput"
+                class="js-modal-add-photo-input"
+                required
+              >
+                <option disabled selected value>
+                  Sélectionnez une catégorie
+                </option>
+                <option value="1">Objets</option>
+                <option value="2">Appartements</option>
+                <option value="3">Hôtels &amp; restaurants</option>
               </select>
             </div>
+
+            <div class="modal-add-photo-validate-div">
+              <button
+                class="modal-validate-button filter-button"
+                type="submit"
+                disabled
+              >
+                Valider
+              </button>
+              <span class="form-error-msg"
+                >Veuillez renseigner tous les champs pour pouvoir poster un
+                nouveau projet</span
+              >
+            </div>
           </form>
-
-          <div class="modal-add-photo-validate-div">
-            <button class="modal-validate-button filter-button" type="submit" disabled>
-              Valider
-            </button>
-            <span class="form-error-msg">Veuillez renseigner tous les champs pour pouvoir poster un nouveau projet</span>
-          </div>
-
-        </div>
-
         </div>
       </div>
     </aside>
