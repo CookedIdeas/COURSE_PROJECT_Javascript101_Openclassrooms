@@ -253,8 +253,10 @@ li:hover {
 
 .gallery img {
   max-width: 100%;
-  min-height: 435px;
+  aspect-ratio: 3 / 4;
+  object-size: cover;
 }
+
 #contact {
   width: 50%;
   margin: auto;
