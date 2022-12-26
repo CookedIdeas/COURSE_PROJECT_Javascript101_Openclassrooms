@@ -254,7 +254,6 @@ li:hover {
 .gallery img {
   max-width: 100%;
   aspect-ratio: 3 / 4;
-  object-size: cover;
 }
 
 #contact {
