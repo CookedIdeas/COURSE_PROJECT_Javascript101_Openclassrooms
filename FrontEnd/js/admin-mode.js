@@ -128,7 +128,6 @@ export const enableAdminMode = (token) => {
   const openAddPhotoModal = (e) => {
     e.preventDefault;
     addPhotoFocusables = Array.from(modal.querySelectorAll(focusableSelector));
-    console.log("clicked");
     modalWorksDisplay.style.display = "none";
     modalAddPhoto.style.display = "flex";
   };
@@ -189,7 +188,6 @@ export const enableAdminMode = (token) => {
     const titleValue = document.getElementById("photoTitleInput").value;
     const categoryValue = document.getElementById("photoCategoryInput").value;
     if (addedPhoto !== undefined && titleValue && categoryValue) {
-      console.log("fullfilled");
       validateAddPhotoButton.removeAttribute("disabled");
       formErrorMeassage.style.visibility = "hidden";
     } else {
@@ -268,7 +266,6 @@ export const enableAdminMode = (token) => {
     if (index < 0) {
       index = focusables.length - 1;
     }
-    console.log(index);
     focusables[index].focus();
   };
 

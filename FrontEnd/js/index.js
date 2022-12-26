@@ -10,6 +10,7 @@ if (thisPageName === "index.html") {
   fetchWorkFunction();
   const userToken = getCookie("token");
   enableAdminMode(userToken);
+  console.log("page load");
 } else if (thisPageName === "login.html") {
   const loginButton = document.getElementById("loginButton");
   loginButton.addEventListener("click", logUser);

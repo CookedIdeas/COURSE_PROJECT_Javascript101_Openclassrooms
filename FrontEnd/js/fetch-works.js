@@ -8,7 +8,7 @@ import { getCookie } from "./cookie-management.js";
 
 export const displayWorks = (parentElement, fetchedWorks) => {
   let galleryElement = document.querySelector(".gallery");
-  console.log(fetchedWorks);
+  // console.log(fetchedWorks);
   for (let work of fetchedWorks) {
     //create a figure for each work
     let figureElement = document.createElement("figure");
@@ -193,9 +193,11 @@ export const postWorkRequest = (data) => {
     method: "POST",
     body: data,
   })
-    .then(function (response) {
-      console.log(response.status);
-    })
+    .then
+    //   function (response) {
+    //   console.log(response.status);
+    // }
+    ()
     .catch(function (error) {
       console.log(error);
     });

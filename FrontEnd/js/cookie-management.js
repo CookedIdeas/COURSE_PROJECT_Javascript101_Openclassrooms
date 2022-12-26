@@ -12,7 +12,6 @@ export function setCookie(name, value, expirationInHours) {
 
 export function eraseCookie(name) {
   document.cookie = name + "=; Max-Age=-99999999;";
-  console.log("deletedcookie" + name);
 }
 
 export function getCookie(name) {
