@@ -390,10 +390,17 @@ select {
   padding: 0 20px;
 }
 
-.main-of-login-page > form > div > button {
+.login-button-container {
+  align-items: center;
+}
+
+.loginButton {
   background-color: #1d6154;
   color: white;
   padding: 10px 39px;
+  border-radius: 60px;
+  border: none;
+  font-size: 14px;
 }
 
 .login-error-msg {

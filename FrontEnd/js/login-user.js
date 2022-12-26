@@ -7,7 +7,7 @@ const loginErrorMsg = document.querySelector(".login-error-msg");
 //erase token cookie before to test login function
 // eraseCookie("token");
 
-export const testLogin = (usersInputs) => {
+export const loginRequest = (usersInputs) => {
   const fetchLogin = fetch(API_URL + "users/login", {
     headers: {
       Accept: "application/json",
@@ -21,19 +21,17 @@ export const testLogin = (usersInputs) => {
         loginErrorMsg.style.visibility = "hidden";
         return res.json();
       } else {
-        //server response is not 200 -> display error message
+        //server response is not 500 and is not 200 -> display error message
         console.log(res.status);
         loginErrorMsg.style.visibility = "visible";
       }
     })
     .then(function (user) {
-      //response is 200, store token in cookie
-      console.log(user);
+      //response is 200, store token and userId in cookie
       const userToken = user.token;
       setCookie("token", userToken, 24);
       const userId = user.userId;
       setCookie("userId", userId, 24);
-      console.log(getCookie("token"));
       location.replace("http://127.0.0.1:5500/FrontEnd/index.html");
     })
     .catch(function (error) {
@@ -52,10 +50,8 @@ export const logUser = (e) => {
     password: userPwd,
   };
 
-  console.log(reqBody);
-
   //launch post request with the inputs object
-  testLogin(reqBody);
+  loginRequest(reqBody);
 };
 
 // loginButton.addEventListener("click", logUser);

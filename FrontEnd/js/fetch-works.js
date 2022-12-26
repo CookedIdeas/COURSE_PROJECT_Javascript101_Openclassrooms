@@ -2,15 +2,18 @@ import { deleteThisWork } from "./admin-mode.js";
 import { API_URL } from "./config.js";
 import { getCookie } from "./cookie-management.js";
 
+const galleryElement = document.querySelector(".gallery");
+
 // ================== DISPLAY FUNCTION ================== //
 
 //access the div gallery where works will be displayed
 
-export const displayWorks = (parentElement, fetchedWorks) => {
-  let galleryElement = document.querySelector(".gallery");
-  // console.log(fetchedWorks);
+export const displayWorks = (fetchedWorks) => {
+  console.log(fetchedWorks);
+  // for each work of fetchedWorks, create a figure with img inside, figcaption and a data-category
   for (let work of fetchedWorks) {
     //create a figure for each work
+
     let figureElement = document.createElement("figure");
 
     //give data-category with the right category
@@ -32,7 +35,7 @@ export const displayWorks = (parentElement, fetchedWorks) => {
     figureElement.appendChild(figcaptionElement);
 
     //add the created figure to the gallery element
-    parentElement.appendChild(figureElement);
+    galleryElement.appendChild(figureElement);
   }
 };
 
@@ -107,12 +110,14 @@ export const filterFunction = async () => {
         prevSelectedFilter[0].classList.remove("selectedInput");
       }
 
+      //give selected style to clicked btn
       this.classList.add("selectedInput");
-      const localStoredWorks = JSON.parse(window.localStorage.getItem("works"));
 
       //get the categoryId of the clicked filterButton
       const selectedCategory = Number(this.value);
-      let galleryElement = document.querySelector(".gallery");
+
+      const localStoredWorks = JSON.parse(window.localStorage.getItem("works"));
+
       //if categoryId > 0, clicked filterButton != all
       if (selectedCategory > 0) {
         //filter localy stored works by their categoryId
@@ -125,16 +130,17 @@ export const filterFunction = async () => {
         galleryElement.replaceChildren();
 
         //display the filter function result
-        displayWorks(galleryElement, filteredWorks);
+        displayWorks(filteredWorks);
       } else {
-        //display all is selected so empty gallery div and display all localy stored works
+        //"display all" is selected so empty gallery div and display all localy stored works
         galleryElement.replaceChildren();
-        displayWorks(galleryElement, localStoredWorks);
+        displayWorks(localStoredWorks);
       }
     });
   }
 };
 
+// ================== GET WORKS FROM API ================== //
 //get works and if response is ok, display works in page
 export const fetchWorkFunction = () => {
   const fetchWorks = fetch(API_URL + "works", {
@@ -142,17 +148,15 @@ export const fetchWorkFunction = () => {
   })
     .then(function (res) {
       if (res.ok) {
-        // console.log(res.json());
         return res.json();
       }
     })
     .then(function (works) {
       window.localStorage.setItem("works", JSON.stringify(works));
-      let galleryElement = document.querySelector(".gallery");
       if (galleryElement !== null) {
-        displayWorks(galleryElement, works);
+        displayWorks(works);
+        filterFunction();
       }
-      filterFunction();
     })
     .catch(function (error) {
       console.log(error);
@@ -185,7 +189,7 @@ export const deleteThisWorkRequest = (workId) => {
 // ================== POST WORK ================== //
 
 export const postWorkRequest = (data) => {
-  console.log(JSON.stringify(Object.fromEntries(data)));
+  // console.log(JSON.stringify(Object.fromEntries(data)));
   let response = fetch(API_URL + "works", {
     headers: {
       Authorization: "BEARER " + getCookie("token"),
@@ -193,11 +197,9 @@ export const postWorkRequest = (data) => {
     method: "POST",
     body: data,
   })
-    .then
-    //   function (response) {
-    //   console.log(response.status);
-    // }
-    ()
+    .then(function (response) {
+      console.log(response.status);
+    })
     .catch(function (error) {
       console.log(error);
     });
