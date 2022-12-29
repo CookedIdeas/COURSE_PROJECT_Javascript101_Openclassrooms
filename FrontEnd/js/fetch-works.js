@@ -118,7 +118,7 @@ export const filterFunction = async () => {
 
       const localStoredWorks = JSON.parse(window.localStorage.getItem("works"));
 
-      //if categoryId > 0, clicked filterButton != all
+      //if selected categoryId > 0, clicked filterButton !== all
       if (selectedCategory > 0) {
         //filter localy stored works by their categoryId
         const filteredWorks = localStoredWorks.filter(function (work) {
@@ -126,7 +126,6 @@ export const filterFunction = async () => {
         });
 
         //empty the gallery div
-
         galleryElement.replaceChildren();
 
         //display the filter function result
@@ -189,7 +188,7 @@ export const deleteThisWorkRequest = (workId) => {
 // ================== POST WORK ================== //
 
 export const postWorkRequest = (data) => {
-  // console.log(JSON.stringify(Object.fromEntries(data)));
+  // console.log(Object.fromEntries(data));
   let response = fetch(API_URL + "works", {
     headers: {
       Authorization: "BEARER " + getCookie("token"),
@@ -199,6 +198,7 @@ export const postWorkRequest = (data) => {
   })
     .then(function (response) {
       console.log(response.status);
+      return response.json;
     })
     .catch(function (error) {
       console.log(error);

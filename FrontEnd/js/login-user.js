@@ -54,4 +54,4 @@ export const logUser = (e) => {
   loginRequest(reqBody);
 };
 
-// loginButton.addEventListener("click", logUser);
+// loginButton.addEventListener("click", logUser); => displaced in index.js

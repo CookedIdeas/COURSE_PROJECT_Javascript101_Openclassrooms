@@ -328,7 +328,7 @@ button {
 
 .filter-button {
   background-color: white;
-  font-family: "Work Sans";
+  font-family: "Syne";
   font-size: 16px;
   font-weight: 700;
   color: #1d6154;
@@ -409,8 +409,10 @@ select {
   visibility: hidden;
 }
 
-.main-of-login-page > form > a {
+.forgotten-pwd-link {
   text-decoration: underline;
+  font-weight: 600;
+  color: #3d3d3d;
 }
 
 .footer-of-login-page {
