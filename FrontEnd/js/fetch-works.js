@@ -98,6 +98,13 @@ export const displayWorksInModal = (parentElement, fetchedWorks) => {
 
 // ================== FILTER FUNCTION ================== //
 
+const categoryArray = [
+  { id: 1, name: "Objets" },
+  { id: 2, name: "Appartements" },
+  { id: 3, name: "Hotels & restaurants" },
+];
+console.table(categoryArray);
+
 export const filterFunction = async () => {
   const filterButtons = document.getElementsByClassName("filter-button");
 
@@ -113,12 +120,12 @@ export const filterFunction = async () => {
       //give selected style to clicked btn
       this.classList.add("selectedInput");
 
-      //get the categoryId of the clicked filterButton
+      //get the categoryId of the clicked filterButton, /\ it's a string, we need number
       const selectedCategory = Number(this.value);
 
       const localStoredWorks = JSON.parse(window.localStorage.getItem("works"));
 
-      //if selected categoryId > 0, clicked filterButton !== all
+      //if selected categoryId > 0, asked category is !== "all"
       if (selectedCategory > 0) {
         //filter localy stored works by their categoryId
         const filteredWorks = localStoredWorks.filter(function (work) {
@@ -153,6 +160,7 @@ export const FetchAPIgetWorks = () => {
     .then(function (works) {
       window.localStorage.setItem("works", JSON.stringify(works));
       if (galleryElement !== null) {
+        //galleryElement = document.querySelector(".gallery");
         displayWorks(works);
         filterFunction();
       }

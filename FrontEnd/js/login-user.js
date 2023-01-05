@@ -22,7 +22,7 @@ export const loginRequest = (usersInputs) => {
         return res.json();
       } else {
         //server response is not 500 and is not 200 -> display error message
-        console.log(res.status);
+        // console.log(res.status);
         loginErrorMsg.style.visibility = "visible";
       }
     })
