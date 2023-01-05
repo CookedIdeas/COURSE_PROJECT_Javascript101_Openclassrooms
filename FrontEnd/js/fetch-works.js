@@ -9,7 +9,7 @@ const galleryElement = document.querySelector(".gallery");
 //access the div gallery where works will be displayed
 
 export const displayWorks = (fetchedWorks) => {
-  console.log(fetchedWorks);
+  console.table(fetchedWorks);
   // for each work of fetchedWorks, create a figure with img inside, figcaption and a data-category
   for (let work of fetchedWorks) {
     //create a figure for each work
@@ -141,8 +141,8 @@ export const filterFunction = async () => {
 
 // ================== GET WORKS FROM API ================== //
 //get works and if response is ok, display works in page
-export const fetchWorkFunction = () => {
-  const fetchWorks = fetch(API_URL + "works", {
+export const FetchAPIgetWorks = () => {
+  fetch(API_URL + "works", {
     method: "GET",
   })
     .then(function (res) {
@@ -164,8 +164,8 @@ export const fetchWorkFunction = () => {
 
 // ================== DELETE THIS WORK ================== //
 
-export const deleteThisWorkRequest = (workId) => {
-  const deleteWork = fetch(API_URL + "works/" + workId, {
+export const FetchAPIdeleteThisWork = (workId) => {
+  fetch(API_URL + "works/" + workId, {
     headers: {
       Authorization: "BEARER " + getCookie("token"),
     },
@@ -187,9 +187,9 @@ export const deleteThisWorkRequest = (workId) => {
 
 // ================== POST WORK ================== //
 
-export const postWorkRequest = (data) => {
+export const FetchAPIpostWork = (data) => {
   // console.log(Object.fromEntries(data));
-  let response = fetch(API_URL + "works", {
+  fetch(API_URL + "works", {
     headers: {
       Authorization: "BEARER " + getCookie("token"),
     },

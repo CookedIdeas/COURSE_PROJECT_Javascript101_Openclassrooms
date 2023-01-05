@@ -1,10 +1,10 @@
 import { API_URL } from "./config.js";
 import { getCookie } from "./cookie-management.js";
 import {
-  deleteThisWorkRequest,
+  FetchAPIdeleteThisWork,
   displayWorks,
   displayWorksInModal,
-  postWorkRequest,
+  FetchAPIpostWork,
 } from "./fetch-works.js";
 
 // const userToken = getCookie("token");
@@ -207,7 +207,7 @@ export const enableAdminMode = (token) => {
   formElem.onsubmit = async (e) => {
     e.preventDefault();
     const workData = new FormData(formElem);
-    postWorkRequest(workData);
+    FetchAPIpostWork(workData);
   };
 
   // ================== CLOSE MODAL ================== //
@@ -288,5 +288,5 @@ export const enableAdminMode = (token) => {
 export const deleteThisWork = (e) => {
   e.preventDefault();
   const thisId = e.target.getAttribute("data-photo-id");
-  deleteThisWorkRequest(thisId);
+  FetchAPIdeleteThisWork(thisId);
 };
