@@ -2,18 +2,16 @@ import { deleteThisWork } from "./admin-mode.js";
 import { API_URL } from "./config.js";
 import { getCookie } from "./cookie-management.js";
 
+//access the div gallery where works will be displayed
 const galleryElement = document.querySelector(".gallery");
 
 // ================== DISPLAY FUNCTION ================== //
-
-//access the div gallery where works will be displayed
 
 export const displayWorks = (fetchedWorks) => {
   console.table(fetchedWorks);
   // for each work of fetchedWorks, create a figure with img inside, figcaption and a data-category
   for (let work of fetchedWorks) {
     //create a figure for each work
-
     let figureElement = document.createElement("figure");
 
     //give data-category with the right category
@@ -105,49 +103,66 @@ const categoryArray = [
 ];
 console.table(categoryArray);
 
+const filterButtonIsClicked = (clickedButton) => {
+  //if there is a previously selected filterButton, remove his selectedInput class
+  const prevSelectedFilter = document.getElementsByClassName("selectedInput");
+  if (prevSelectedFilter.length > 0) {
+    prevSelectedFilter[0].classList.remove("selectedInput");
+  }
+
+  //give selected style to clicked btn
+  clickedButton.classList.add("selectedInput");
+
+  //get the categoryId of the clicked filterButton, /\ it's a string, we need number
+  const selectedCategory = Number(clickedButton.value);
+
+  const localStoredWorks = JSON.parse(window.sessionStorage.getItem("works"));
+
+  //if selected categoryId > 0, asked category is !== "all"
+  if (selectedCategory > 0) {
+    //filter localy stored works by their categoryId
+    const filteredWorks = localStoredWorks.filter(function (work) {
+      return work.categoryId === selectedCategory;
+    });
+
+    //empty the gallery div
+    galleryElement.replaceChildren();
+
+    //display the filter function result
+    displayWorks(filteredWorks);
+  } else {
+    //"display all" is selected so empty gallery div and display all localy stored works
+    galleryElement.replaceChildren();
+    displayWorks(localStoredWorks);
+  }
+};
+
 export const filterFunction = async () => {
   const filterButtons = document.getElementsByClassName("filter-button");
 
   for (let filter of filterButtons) {
     filter.addEventListener("click", function () {
-      //if there is a previously selected filterButton, remove his selectedInput class
-      const prevSelectedFilter =
-        document.getElementsByClassName("selectedInput");
-      if (prevSelectedFilter.length > 0) {
-        prevSelectedFilter[0].classList.remove("selectedInput");
-      }
-
-      //give selected style to clicked btn
-      this.classList.add("selectedInput");
-
-      //get the categoryId of the clicked filterButton, /\ it's a string, we need number
-      const selectedCategory = Number(this.value);
-
-      const localStoredWorks = JSON.parse(window.localStorage.getItem("works"));
-
-      //if selected categoryId > 0, asked category is !== "all"
-      if (selectedCategory > 0) {
-        //filter localy stored works by their categoryId
-        const filteredWorks = localStoredWorks.filter(function (work) {
-          return work.categoryId === selectedCategory;
-        });
-
-        //empty the gallery div
-        galleryElement.replaceChildren();
-
-        //display the filter function result
-        displayWorks(filteredWorks);
-      } else {
-        //"display all" is selected so empty gallery div and display all localy stored works
-        galleryElement.replaceChildren();
-        displayWorks(localStoredWorks);
-      }
+      filterButtonIsClicked(this);
     });
   }
 };
 
+// ================== ERROR MESSAGES ================== //
+
+const displayErrorMsgIn = (element) => {
+  let errorMsg = document.createElement("p");
+  errorMsg.classList.add("error-msg-gallery");
+  errorMsg.innerHTML =
+    "Message erreur à rédiger / connexion avec base de données échouée";
+
+  element.classList.add("gallery-for-error-msg");
+
+  element.appendChild(errorMsg);
+};
+
 // ================== GET WORKS FROM API ================== //
-//get works and if response is ok, display works in page
+
+//get works and if response is ok, display works in page, else display error msg in gallery
 export const FetchAPIgetWorks = () => {
   fetch(API_URL + "works", {
     method: "GET",
@@ -158,15 +173,17 @@ export const FetchAPIgetWorks = () => {
       }
     })
     .then(function (works) {
-      window.localStorage.setItem("works", JSON.stringify(works));
+      window.sessionStorage.setItem("works", JSON.stringify(works));
       if (galleryElement !== null) {
-        //galleryElement = document.querySelector(".gallery");
+        galleryElement.classList.remove("gallery-for-error-msg");
+        galleryElement.replaceChildren();
         displayWorks(works);
         filterFunction();
       }
     })
     .catch(function (error) {
       console.log(error);
+      displayErrorMsgIn(galleryElement);
     });
 };
 

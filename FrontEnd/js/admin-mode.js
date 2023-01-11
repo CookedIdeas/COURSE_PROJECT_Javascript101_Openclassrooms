@@ -9,11 +9,11 @@ import {
 
 // const userToken = getCookie("token");
 
-const categoryArray = ["Objets", "Appartements", "Hotels & restaurants"];
-const getCategoryName = (categoryId) => {
-  let catName = categoryArray[categoryId - 1];
-  return catName;
-};
+// const categoryArray = ["Objets", "Appartements", "Hotels & restaurants"];
+// const getCategoryName = (categoryId) => {
+//   let catName = categoryArray[categoryId - 1];
+//   return catName;
+// };
 
 const appendEditElement = (parentElement) => {
   let editElement = document.createElement("button");
@@ -32,7 +32,7 @@ const appendEditElement = (parentElement) => {
 
 export const enableAdminMode = (token) => {
   if (token) {
-    document.querySelector(".filtersContainer").replaceChildren();
+    document.querySelector(".filtersContainer").style.display = "none";
 
     //add black headband on top
     const blackHeadbandElement = document.createElement("div");
@@ -115,7 +115,7 @@ export const enableAdminMode = (token) => {
       .querySelector(".js-modal-previous")
       .addEventListener("click", stopPropagation);
     //display works in modal window
-    const localStoredWorks = JSON.parse(window.localStorage.getItem("works"));
+    const localStoredWorks = JSON.parse(window.sessionStorage.getItem("works"));
     displayWorksInModal(modalPortfolio, localStoredWorks);
   };
 
